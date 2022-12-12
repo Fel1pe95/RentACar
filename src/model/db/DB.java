@@ -4,6 +4,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import model.exceptions.DbException;
+
 public class DB {
 
 	private static EntityManagerFactory factory = null;
@@ -11,7 +13,13 @@ public class DB {
 
 	// cria e retorna o factory;
 	private static EntityManagerFactory getFactory() {
-		factory = Persistence.createEntityManagerFactory("rentacar");
+		try {
+			factory = Persistence.createEntityManagerFactory("rentacar");
+		}catch(DbException e) {
+			throw new DbException("Erro ao conectar banco de dados" + e.getMessage());
+			
+		}
+		
 		return factory;
 	}
 
@@ -21,8 +29,8 @@ public class DB {
 		try {
 			factory = getFactory();
 			manager = factory.createEntityManager();
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (DbException e) {
+			throw new DbException("Erro ao conectar banco de dados" + e.getMessage());
 		}
 
 		return manager;

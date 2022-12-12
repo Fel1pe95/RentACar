@@ -2,12 +2,14 @@ package model.dao;
 
 import java.util.List;
 
+import model.entities.Car;
+
 public interface CarDAO {
 
-	void insert(Object obj);
-	void update(Object obj);
-	void removeById(Object obj);
-	Object findById(Integer id);
-	List<Object> findAll();
+	void insert(Car obj);
+	void update(Car obj);
+	void removeById(Integer id);
+	Car findById(Integer id);
+	List<Car> findAll();
 	
 }
