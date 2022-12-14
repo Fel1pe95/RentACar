@@ -3,12 +3,16 @@ package application;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Main extends Application{
 
 	public static Scene mainScene;
+	public static AnchorPane pane;
+	public static VBox vBox;
 	
 	public static void main(String[] args) {
 
@@ -20,8 +24,9 @@ public class Main extends Application{
 	
 		try {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/MainView.fxml"));
-		AnchorPane anchorPane = loader.load();
-		mainScene =  new Scene(anchorPane);
+		pane = loader.load();
+		vBox = (VBox) pane.getChildren().get(1);
+		mainScene =  new Scene(pane);
 		stage.setScene(mainScene);
 		stage.setResizable(false);
 		stage.setTitle("Rent a Car");
@@ -30,5 +35,17 @@ public class Main extends Application{
 			e.printStackTrace();
 		}
 		
+	}
+	
+	
+	public static AnchorPane getAnchorPane() {
+		return pane;
+	}
+	
+	public static VBox getVbox() {
+		return vBox;
+	}
+	public static Scene getMainScene() {
+		return mainScene;
 	}
 }
