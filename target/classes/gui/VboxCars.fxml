@@ -38,6 +38,7 @@
                   <TableColumn fx:id="tableColumnId" prefWidth="75.0" text="Id" />
                   <TableColumn fx:id="tableColumnModel" prefWidth="75.0" text="Model" />
                   <TableColumn fx:id="tableColumnHourlyValue" prefWidth="75.0" text="HourlyValue" />
+                  <TableColumn fx:id="tableColumnEdit" prefWidth="75.0" />
                </columns>
             </TableView>
          </content>
