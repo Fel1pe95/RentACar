@@ -1,5 +1,6 @@
 package application;
 
+import gui.CarFormularyController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -42,10 +43,11 @@ public class Main extends Application{
 		return pane;
 	}
 	
-	public static VBox getVbox() {
-		return vBox;
-	}
 	public static Scene getMainScene() {
 		return mainScene;
+	}
+	
+	public static VBox getVbox() {
+		return vBox;
 	}
 }

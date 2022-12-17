@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 import application.Main;
+import gui.listeners.DataChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,8 +16,6 @@ import model.services.CarService;
 
 public class MainViewController implements Initializable {
 
-	@FXML
-	private VBox vBox;
 	@FXML
 	private Button btCars;
 	@FXML
@@ -46,8 +45,9 @@ public class MainViewController implements Initializable {
 
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
-			Node node = loader.load();
-			vBox = (VBox) Main.getAnchorPane().getChildren().get(1);
+			Node node = loader.load();		
+			
+			VBox vBox = (VBox) Main.getAnchorPane().getChildren().get(1);
 			vBox.getChildren().addAll(node);
 			
 			T controller = loader.getController();
@@ -58,4 +58,6 @@ public class MainViewController implements Initializable {
 		}
 
 	}
+
+	
 }

@@ -6,12 +6,14 @@ import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 import application.Main;
+import gui.listeners.DataChangeListener;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
@@ -20,6 +22,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Car;
@@ -27,7 +30,7 @@ import model.exceptions.DbException;
 import model.services.CarService;
 import model.util.Utils;
 
-public class VboxCarsController implements Initializable {
+public class VboxCarsController implements Initializable, DataChangeListener {
 
 	private CarService service;
 
@@ -63,6 +66,7 @@ public class VboxCarsController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		initializeNodes();
 		initEditButtons();
+
 	}
 
 	public void initializeNodes() {
@@ -97,24 +101,22 @@ public class VboxCarsController implements Initializable {
 					return;
 				}
 				setGraphic(button);
-				button.setOnAction(event -> loadView(obj, "/gui/CarFormulary.fxml", Utils.currentStage(event),
-						(CarFormularyController controller) -> {
-							controller.setEntity(obj);
-							controller.setService(new CarService());
-							controller.updateFormData();
-						}));
+				button.setOnAction(event -> loadView(obj, "/gui/CarFormulary.fxml", Utils.currentStage(event)));
 			}
 		});
 	}
 
-	public <T> void loadView(Car car, String absoluteName, Stage Parentstage, Consumer<T> initializingAction) {
+	public void loadView(Car car, String absoluteName, Stage Parentstage) {
 
 		try {
 
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			Pane pane = loader.load();
-			T controller = loader.getController();
-			initializingAction.accept(controller);
+			CarFormularyController controller = loader.getController();
+			controller.setEntity(car);
+			controller.setService(new CarService());
+			controller.subscribeDataChangeListener(this);
+			controller.updateFormData();
 
 			Stage stage = new Stage();
 			stage.setTitle("Car formulary");
@@ -130,4 +132,24 @@ public class VboxCarsController implements Initializable {
 
 	}
 
+	@Override
+	public void onDataChanged() {
+
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/VboxCars.fxml"));
+			Node node = loader.load();	
+			VboxCarsController controller = loader.getController();	
+			VBox vBox = (VBox) Main.getAnchorPane().getChildren().get(1);
+			vBox.getChildren().clear();
+			vBox.getChildren().addAll(node);
+			controller.setCarService(new CarService());
+			controller.updateTableView();
+			
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 }
