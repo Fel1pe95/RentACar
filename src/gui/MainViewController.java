@@ -5,7 +5,6 @@ import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 import application.Main;
-import gui.listeners.DataChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -45,7 +44,7 @@ public class MainViewController implements Initializable {
 
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
-			Node node = loader.load();		
+			Node node = loader.load();
 			
 			VBox vBox = (VBox) Main.getAnchorPane().getChildren().get(1);
 			vBox.getChildren().addAll(node);

@@ -3,13 +3,14 @@ package gui;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.function.Consumer;
 
 import application.Main;
 import gui.listeners.DataChangeListener;
+import gui.util.Utilitary;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -41,7 +42,7 @@ public class VboxCarsController implements Initializable, DataChangeListener {
 	@FXML
 	private MenuItem menuDelete;
 	@FXML
-	private MenuItem menuUpdate;
+	private MenuItem menuNew;
 	@FXML
 	private MenuItem menuAbout;
 	@FXML
@@ -59,8 +60,21 @@ public class VboxCarsController implements Initializable, DataChangeListener {
 
 	@FXML
 	public void onMenuItemCloseAction() {
-		Main.getVbox().getChildren().clear();
+	MainViewController controller = new MainViewController();
+	Main.getVbox().getChildren().clear();
+	controller.loadView("/gui/MainRightPane.fxml", x -> {});
 	}
+	
+	@FXML
+	public void onMenuItemNewAction(ActionEvent event) {
+		loadView(new Car(), "/gui/CarFormulary.fxml", Main.getParentStage());
+	}
+	@FXML
+	public void onMenuItemDeleteAction() {}
+	@FXML
+	public void onMenuItemFindAction() {}
+	@FXML
+	public void onMenuItemAboutAction() {}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -73,6 +87,7 @@ public class VboxCarsController implements Initializable, DataChangeListener {
 		tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
 		tableColumnModel.setCellValueFactory(new PropertyValueFactory<>("model"));
 		tableColumnHourlyValue.setCellValueFactory(new PropertyValueFactory<>("hourlyValue"));
+		Utilitary.formatTableColumnDouble(tableColumnHourlyValue, 2);
 	}
 
 	public void setCarService(CarService service) {
@@ -106,7 +121,7 @@ public class VboxCarsController implements Initializable, DataChangeListener {
 		});
 	}
 
-	public void loadView(Car car, String absoluteName, Stage Parentstage) {
+	public <T> void loadView(Car car, String absoluteName, Stage Parentstage) {
 
 		try {
 
@@ -114,7 +129,7 @@ public class VboxCarsController implements Initializable, DataChangeListener {
 			Pane pane = loader.load();
 			CarFormularyController controller = loader.getController();
 			controller.setEntity(car);
-			controller.setService(new CarService());
+			controller.setService(service);
 			controller.subscribeDataChangeListener(this);
 			controller.updateFormData();
 
@@ -142,7 +157,7 @@ public class VboxCarsController implements Initializable, DataChangeListener {
 			VBox vBox = (VBox) Main.getAnchorPane().getChildren().get(1);
 			vBox.getChildren().clear();
 			vBox.getChildren().addAll(node);
-			controller.setCarService(new CarService());
+			controller.setCarService(service);
 			controller.updateTableView();
 			
 			
@@ -152,4 +167,5 @@ public class VboxCarsController implements Initializable, DataChangeListener {
 		}
 		
 	}
+	
 }

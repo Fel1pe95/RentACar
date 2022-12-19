@@ -1,10 +1,8 @@
 package application;
 
-import gui.CarFormularyController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -14,6 +12,7 @@ public class Main extends Application{
 	public static Scene mainScene;
 	public static AnchorPane pane;
 	public static VBox vBox;
+	public static Stage parentStage;
 	
 	public static void main(String[] args) {
 
@@ -23,15 +22,17 @@ public class Main extends Application{
 	@Override
 	public void start(Stage stage) throws Exception {
 	
+		this.parentStage = stage;
+		
 		try {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/MainView.fxml"));
 		pane = loader.load();
 		vBox = (VBox) pane.getChildren().get(1);
 		mainScene =  new Scene(pane);
-		stage.setScene(mainScene);
-		stage.setResizable(false);
-		stage.setTitle("Rent a Car");
-		stage.show();
+		parentStage.setScene(mainScene);
+		parentStage.setResizable(false);
+		parentStage.setTitle("Rent a Car");
+		parentStage.show();
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -49,5 +50,9 @@ public class Main extends Application{
 	
 	public static VBox getVbox() {
 		return vBox;
+	}
+	
+	public static Stage getParentStage() {
+		return parentStage;
 	}
 }

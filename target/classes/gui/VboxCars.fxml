@@ -14,19 +14,19 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-                  <MenuItem fx:id="menuFind" mnemonicParsing="false" text="Find" />
+                  <MenuItem fx:id="menuNew" mnemonicParsing="false" onAction="#onMenuItemNewAction" text="New" />
               <MenuItem fx:id="menuClose" mnemonicParsing="false" onAction="#onMenuItemCloseAction" text="Close" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
             <items>
-              <MenuItem fx:id="menuDelete" mnemonicParsing="false" text="Delete" />
-                  <MenuItem fx:id="menuUpdate" mnemonicParsing="false" text="Update" />
+              <MenuItem fx:id="menuDelete" mnemonicParsing="false" onAction="#onMenuItemDeleteAction" text="Delete" />
+                  <MenuItem fx:id="menuFind" mnemonicParsing="false" onAction="#onMenuItemFindAction" text="Find" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem fx:id="menuAbout" mnemonicParsing="false" text="About" />
+              <MenuItem fx:id="menuAbout" mnemonicParsing="false" onAction="#onMenuItemAboutAction" text="About" />
             </items>
           </Menu>
         </menus>
