@@ -2,10 +2,12 @@ package gui;
 
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import application.Main;
 import gui.listeners.DataChangeListener;
+import gui.util.Alerts;
 import gui.util.Utilitary;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
@@ -17,10 +19,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -28,6 +32,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Car;
 import model.exceptions.DbException;
+import model.exceptions.DbIntegrityException;
 import model.services.CarService;
 import model.util.Utils;
 
@@ -55,14 +60,14 @@ public class VboxCarsController implements Initializable, DataChangeListener {
 	private TableColumn<Car, Double> tableColumnHourlyValue;
 	@FXML
 	private TableColumn<Car, Car> tableColumnEdit;
+	@FXML
+	private TableColumn<Car,Car> tableColumnRemove;
 
 	private ObservableList<Car> obsList;
 
 	@FXML
 	public void onMenuItemCloseAction() {
-	MainViewController controller = new MainViewController();
 	Main.getVbox().getChildren().clear();
-	controller.loadView("/gui/MainRightPane.fxml", x -> {});
 	}
 	
 	@FXML
@@ -80,6 +85,7 @@ public class VboxCarsController implements Initializable, DataChangeListener {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		initializeNodes();
 		initEditButtons();
+		initRemoveButtons();
 
 	}
 
@@ -120,6 +126,41 @@ public class VboxCarsController implements Initializable, DataChangeListener {
 			}
 		});
 	}
+	
+	private void initRemoveButtons() {
+		tableColumnRemove.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+		tableColumnRemove.setCellFactory(param -> new TableCell<Car, Car>() {
+			private final Button button = new Button("remove");
+
+			@Override
+			protected void updateItem(Car obj, boolean empty) {
+				super.updateItem(obj, empty);
+				if (obj == null) {
+					setGraphic(null);
+					return;
+				}
+				setGraphic(button);
+				button.setOnAction(event -> removeEntity(obj));
+			}
+		});
+	}
+	
+	private void removeEntity(Car obj) {
+		Optional<ButtonType> result = Alerts.showConfirmation("Confirmation", "Are you sure to delete?");
+		if(result.get() == ButtonType.OK) {
+			if(service == null) {
+				throw new IllegalStateException("service was null");
+			}
+			try {
+				service.removeCar(obj.getId());
+				updateTableView();
+			}catch(DbIntegrityException e) {
+				Alerts.showAlert("Error", null, e.getMessage(), AlertType.ERROR);
+			}
+		}
+	}
+	
+	
 
 	public <T> void loadView(Car car, String absoluteName, Stage Parentstage) {
 

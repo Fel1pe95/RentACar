@@ -109,6 +109,7 @@ public class CarFormularyController implements Initializable {
 			txtModel.setPromptText("Model");
 		}else {
 			txtModel.setText(car.getModel());
+			txtModel.editableProperty().set(false);
 		}
 		if (car.getHourlyValue() == null) {
 			txtHourlyValue.setPromptText("00,0");
