@@ -9,8 +9,8 @@
    <children>
       <Pane prefHeight="500.0" prefWidth="200.0" style="-fx-background-color: #87CEFA;">
          <children>
-            <Button fx:id="btCars" layoutX="25.0" layoutY="32.0" mnemonicParsing="false" onAction="#onBtCarsAction" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #FFFFFF;" text="Carros" />
-            <Button fx:id="btRents" layoutX="25.0" layoutY="72.0" mnemonicParsing="false" onAction="#onBtRentsAction" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #FFFFFF;" text="Alugueis" />
+            <Button fx:id="btCars" layoutX="25.0" layoutY="32.0" mnemonicParsing="false" onAction="#onBtCarsAction" prefHeight="30.0" prefWidth="150.0" text="Carros" />
+            <Button fx:id="btRents" layoutX="25.0" layoutY="72.0" mnemonicParsing="false" onAction="#onBtRentsAction" prefHeight="30.0" prefWidth="150.0" text="Alugueis" />
          </children>
       </Pane>
       <VBox fx:id="vBox" layoutX="200.0" prefHeight="500.0" prefWidth="400.0" />

@@ -18,12 +18,6 @@
               <MenuItem fx:id="menuClose" mnemonicParsing="false" onAction="#onMenuItemCloseAction" text="Close" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem fx:id="menuDelete" mnemonicParsing="false" onAction="#onMenuItemDeleteAction" text="Delete" />
-                  <MenuItem fx:id="menuFind" mnemonicParsing="false" onAction="#onMenuItemFindAction" text="Find" />
-            </items>
-          </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
               <MenuItem fx:id="menuAbout" mnemonicParsing="false" onAction="#onMenuItemAboutAction" text="About" />

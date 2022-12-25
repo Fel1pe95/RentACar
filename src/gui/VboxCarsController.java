@@ -41,11 +41,7 @@ public class VboxCarsController implements Initializable, DataChangeListener {
 	private CarService service;
 
 	@FXML
-	private MenuItem menuFind;
-	@FXML
 	private MenuItem menuClose;
-	@FXML
-	private MenuItem menuDelete;
 	@FXML
 	private MenuItem menuNew;
 	@FXML
@@ -74,10 +70,7 @@ public class VboxCarsController implements Initializable, DataChangeListener {
 	public void onMenuItemNewAction(ActionEvent event) {
 		loadView(new Car(), "/gui/CarFormulary.fxml", Main.getParentStage());
 	}
-	@FXML
-	public void onMenuItemDeleteAction() {}
-	@FXML
-	public void onMenuItemFindAction() {}
+	
 	@FXML
 	public void onMenuItemAboutAction() {}
 

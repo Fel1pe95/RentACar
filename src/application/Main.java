@@ -29,6 +29,7 @@ public class Main extends Application{
 		pane = loader.load();
 		vBox = (VBox) pane.getChildren().get(1);
 		mainScene =  new Scene(pane);
+		mainScene.getStylesheets().add("/gui/Main.css");
 		parentStage.setScene(mainScene);
 		parentStage.setResizable(false);
 		parentStage.setTitle("Rent a Car");
